@@ -4,10 +4,11 @@ import TodoItems from "./Components/TodoItems";
 import "./App.css";
 import { useState } from "react";
 import Welcome from "./Components/Welcome";
+import { TodoItemsContext } from "./store/todoiItemsStore";
 function App() {
   const [toDoItems, setToDoItems] = useState([]);
 
-  const handleNewItem = (itemName, itemDate) => {
+  const addNewItem = (itemName, itemDate) => {
     console.log(`Item Added ${itemName} and ${itemDate}`);
     const newList = [
       ...toDoItems,
@@ -19,7 +20,7 @@ function App() {
     setToDoItems(newList);
   };
 
-  const handleDeleteItem = (todoItemName) => {
+  const deleteItem = (todoItemName) => {
     console.log(`item deleated ${todoItemName}`);
 
     const newList = toDoItems.filter((item) => item.todoName !== todoItemName);
@@ -27,12 +28,20 @@ function App() {
   };
 
   return (
-    <center className="todo-caontainer">
-      <AppName></AppName>
-      <AddTODO onNewItem={handleNewItem}></AddTODO>
-      {toDoItems.length === 0 && <Welcome></Welcome>}
-      <TodoItems items={toDoItems} ondeleteClick={handleDeleteItem}></TodoItems>
-    </center>
+    <TodoItemsContext.Provider
+      value={{
+        items: toDoItems,
+        addNewItem: addNewItem,
+        deleteItem: deleteItem,
+      }}
+    >
+      <center className="todo-caontainer">
+        <AppName></AppName>
+        <AddTODO></AddTODO>
+        {<Welcome></Welcome>}
+        <TodoItems items={toDoItems}></TodoItems>
+      </center>
+    </TodoItemsContext.Provider>
   );
 }
 

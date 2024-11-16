@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import TodoItem from "./TodoItem";
 import PropTypes from "prop-types";
-function TodoItems({ items, ondeleteClick }) {
+import { TodoItemsContext } from "../store/todoiItemsStore";
+function TodoItems() {
+  const { items, deleteItem } = useContext(TodoItemsContext);
+  console.log(items);
+
   return (
     <>
       <div className="item-container">
@@ -9,7 +14,7 @@ function TodoItems({ items, ondeleteClick }) {
             key={index}
             todoName={item.todoName}
             todoDate={item.todoDate}
-            ondeleteClick={ondeleteClick}
+            ondeleteClick={deleteItem}
           ></TodoItem>
         ))}
       </div>

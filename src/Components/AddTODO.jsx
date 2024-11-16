@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoAddCircleSharp } from "react-icons/io5";
+import { TodoItemsContext } from "../store/todoiItemsStore";
 
-function AddTODO({ onNewItem }) {
+function AddTODO() {
+  const { addNewItem } = useContext(TodoItemsContext);
   const [todoName, setTodoName] = useState("");
 
   const [todoDate, setTodoDate] = useState("");
@@ -16,7 +18,7 @@ function AddTODO({ onNewItem }) {
   };
 
   const handleAddClick = () => {
-    onNewItem(todoName, todoDate);
+    addNewItem(todoName, todoDate);
     setTodoDate("");
     setTodoName("");
   };
